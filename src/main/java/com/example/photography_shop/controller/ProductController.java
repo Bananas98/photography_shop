@@ -25,7 +25,7 @@ public class ProductController {
         productService.getAllProducts();
     }
 
-    @GetMapping()
+    @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @ResponseStatus(HttpStatus.OK)
     public void getAllProductByCategory(@PathVariable String idCategory) {

@@ -4,6 +4,7 @@ package com.example.photography_shop.config;
 import com.example.photography_shop.security.JwtAuthenticationFilter;
 import com.example.photography_shop.security.JwtAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -31,11 +32,12 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+
+
     private final PasswordEncoder passwordEncoder;
 
 
     @Qualifier("userDetailsServiceImpl")
-
     private final UserDetailsService userDetailsService;
 
     //Konfiguracja security

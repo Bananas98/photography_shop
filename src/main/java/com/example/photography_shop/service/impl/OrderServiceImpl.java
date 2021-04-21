@@ -45,7 +45,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderRepository.GroupedOrders> getOrders() {
-        return orderRepository.getOrdersForCurrentUser(userService.getCurrentUser().getId());
+        //return orderRepository.getOrdersForCurrentUser(userService.getCurrentUser().getId());
+        return null;
     }
 
     @Override

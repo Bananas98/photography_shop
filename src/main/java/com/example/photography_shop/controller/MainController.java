@@ -23,7 +23,12 @@ public class MainController {
         this.userService = userService;
         this.productService = productService;
     }
-
+//    @PostMapping("/login")
+//    @ResponseStatus(HttpStatus.OK)
+//    public String login() {
+//        return "";
+//    }
+//
     @PostMapping("/registration")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAnyRole()")
@@ -31,7 +36,7 @@ public class MainController {
         userService.save(user);
     }
 
-    @PostMapping("/index")
+    @PostMapping("/")
     @PreAuthorize("hasAnyRole()")
     public List<Product> getAccessProduct() {
        return productService.getByAccessProduct();

@@ -3,9 +3,11 @@ package com.example.photography_shop.repository;
 import com.example.photography_shop.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
 //    @Query(value = "select sum(p.price*o.quantity) as totalPrice, count(o.quantity) as counter, o.order_number as orderNumber " +
@@ -15,9 +17,9 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 //            "join user u " +
 //            "on u.id = o.user_id " +
 //            "where o.user_id =?1;", nativeQuery = true)
-
-    // Передаем значения из select в этот интерфейс
-    List<GroupedOrders> getOrdersForCurrentUser(Long userId);
+//
+//    // Передаем значения из select в этот интерфейс
+//    List<GroupedOrders> getOrdersForCurrentUser(Long userId);
     void getOrdersByOrderNumber(String orderNumber);
 
     // Мы используем, если не используем стандартный класс таблицы

@@ -23,7 +23,7 @@ import java.util.UUID;
 import org.springframework.util.CollectionUtils;
 import org.thymeleaf.util.SetUtils;
 
-
+@RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -33,22 +33,15 @@ public class UserServiceImpl implements UserService {
 
     private final RoleRepository roleRepository;
 
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+//    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @Override
     public User save(User user) {
-        Set<Role> roles = SetUtils.singletonSet(roleRepository.findByName(USER_ROLE));
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        Set<Role> roles = SetUtils.singletonSet(roleRepository.findByLogin(USER_ROLE));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         if (CollectionUtils.isEmpty(user.getRoles())) {
             user.setRoles(roles);
         }
@@ -58,10 +51,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAll() {
         return userRepository.findAll();
-    }
-
-    public User findByUsername(String username) {
-        return userRepository.findByFirstNameAndAndLastName(username);
     }
 
     @Override
@@ -80,7 +69,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getCurrentUser() {
         String login = SecurityContextHolder.getContext().getAuthentication().getName();
-        return userRepository.findByLoginOptional(login).orElseThrow(EntityNotFoundException::new);
+        return userRepository.findByLogin(login).orElseThrow(EntityNotFoundException::new);
     }
 
 
@@ -102,7 +91,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void remindPassword(RemindPassword remindPassword) {
-        userRepository.findByLoginOptional(remindPassword.getMail())
+        userRepository.findByLogin(remindPassword.getMail())
                 .ifPresent(user -> {
                     user.setActivatedCode(UUID.randomUUID().toString());
                     userRepository.save(user);

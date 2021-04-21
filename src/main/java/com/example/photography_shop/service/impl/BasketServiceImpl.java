@@ -30,8 +30,9 @@ public class BasketServiceImpl implements BasketService {
 
     @Override
     public List<Basket> getUserBasket() {
-        String name = SecurityContextHolder.getContext().getAuthentication().getName();
-        return basketRepository.getBasketByUserName(name);
+//        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+//        return basketRepository.getBasketByUserName(name);
+        return null;
     }
 
 //    @Override
@@ -41,36 +42,36 @@ public class BasketServiceImpl implements BasketService {
 
     @Override
     public Basket addToBasket(Product product) {
-        String login = SecurityContextHolder.getContext().getAuthentication().getName();
-        return userRepository.findByLogin(login)
-                .map(user -> productRepository.findById(String.valueOf(product.getId()))
-                        .map(productDb -> {
-                            Optional<Basket> optionalBasket
-                                    = basketRepository.findByProductIdAndUserId(productDb.getId(), user.getId());
-
-                            if (optionalBasket.isPresent()) {
-                                return updateQuantityProduct(optionalBasket.get());
-                            }
-                            Basket basket = new Basket();
-                            basket.setProduct(productDb);
-                            basket.setUser(user);
-
-                            return basketRepository.save(basket);
-                        }).orElseThrow(() -> new EntityNotFoundException("Product doesn't exit"))
-                ).orElseThrow(() -> new EntityNotFoundException("User doesn't exist"));
-
+//        String login = SecurityContextHolder.getContext().getAuthentication().getName();
+//        return userRepository.findByLogin(login)
+//                .map(user -> productRepository.findById(String.valueOf(product.getId()))
+//                        .map(productDb -> {
+//                            Optional<Basket> optionalBasket
+//                                    = basketRepository.findByProductIdAndUserId(productDb.getId(), user.getId());
+//
+//                            if (optionalBasket.isPresent()) {
+//                                return updateQuantityProduct(optionalBasket.get());
+//                            }
+//                            Basket basket = new Basket();
+//                            basket.setProduct(productDb);
+//                            basket.setUser(user);
+//
+//                            return basketRepository.save(basket);
+//                        }).orElseThrow(() -> new EntityNotFoundException("Product doesn't exit"))
+//                ).orElseThrow(() -> new EntityNotFoundException("User doesn't exist"));
+return null;
     }
 
     @Override
     public void deleteProductFromBasket(Long id) {
         String login = SecurityContextHolder.getContext().getAuthentication().getName();
-        basketRepository.deleteByUserLoginAndProductId(login, id);
+//        basketRepository.deleteByUserLoginAndProductId(login, id);
     }
 
     @Override
     public void deleteUserBasket() {
         String login = SecurityContextHolder.getContext().getAuthentication().getName();
-        basketRepository.deleteByUserLogin(login);
+      //  basketRepository.deleteByUserLogin(login);
     }
 
     private Basket updateQuantityProduct(Basket basket) {
