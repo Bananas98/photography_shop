@@ -15,8 +15,8 @@ import javax.persistence.*;
 public class Order {
 
 
-    @GeneratedValue
     @Id
+    @GeneratedValue
     private Long id;
     private String orderNumber;
 
